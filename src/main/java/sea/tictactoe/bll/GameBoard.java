@@ -2,16 +2,17 @@ package sea.tictactoe.bll;
 
 import javafx.event.ActionEvent;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GameBoard {
 
     // Instance variables
     private char currentPlayer = 'X';
-    private String gamemode;
     private char[][] gameboard = {{' ', ' ', ' '},
                                   {' ', ' ', ' '},
                                   {' ', ' ', ' '}};
+    private String gamemode;
 
     public void setGamemode(String chooseMode) {
         this.gamemode = chooseMode;
@@ -21,8 +22,10 @@ public class GameBoard {
         if(gameboard[row][col] == ' ') {
             gameboard[row][col] = currentPlayer;
             System.out.println("Pressed!");
+            if(!winCheck()){
+                drawCheck();
+            }
             getNextPlayer();
-            winCheck();
         }
     }
 
@@ -34,7 +37,7 @@ public class GameBoard {
         }
     }
 
-    public char winCheck(){
+    public boolean winCheck(){
 
         for (int a = 0; a < 8; a++) {
             String line = null;
@@ -65,14 +68,29 @@ public class GameBoard {
                     break;
             }
 
-            if(line.equals("XXX")){
-                return 'X';
+            if(line.equals("XXX")) {
+                System.out.println("X Wins");
             }
-            if(line.equals("OOO")){
-                return 'O';
+            if(line.equals("OOO")) {
+                System.out.println("O Wins");
+            }
+            if(line.equals("XXX") || line.equals("OOO")){
+                return true;
             }
         }
-        return ' ';
+        return false;
+    }
+
+    public boolean drawCheck(){
+        for (int r = 0; r < gameboard.length; r++){
+            for (int c = 0; c <gameboard[r].length; c++){
+                if (gameboard[r][c] == ' ') {
+                    return false;
+                }
+            }
+        }
+        System.out.println("Draw");
+        return true;
     }
 
     public char getCurrentPlayer(){
@@ -85,4 +103,5 @@ public class GameBoard {
         }
         return false;
     }
+
 }

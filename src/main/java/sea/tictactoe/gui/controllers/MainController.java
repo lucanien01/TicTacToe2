@@ -10,7 +10,8 @@ import sea.tictactoe.bll.GameBoard;
 import java.awt.*;
 
 public class MainController {
-
+    @FXML
+    private GridPane grid;
     private GameBoard gameBoard = new GameBoard();
 
     @FXML
@@ -30,6 +31,19 @@ public class MainController {
             btn.setText(gameBoard.getCurrentPlayer() + "");
         }
         gameBoard.changeGameboard(row, col);
+        gameOverUI();
+    }
 
+    public void gameOverUI() {
+        if (gameBoard.winCheck() || gameBoard.drawCheck()) {
+            for (Node node : grid.getChildren()){
+                Button btn = (Button) node;
+                btn.setDisable(true);
+                btn.getStyleClass().add("winning-btn");
+            }
+
+
+
+        }
     }
 }
