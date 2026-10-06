@@ -20,9 +20,14 @@ public class MenuController {
     private Button btnMultiplayer;
 
     public void openGameboard(ActionEvent event) throws IOException {
+        Button btn = (Button) event.getSource();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/sea/tictactoe/views/MainView.fxml"));
+
         Parent root = loader.load();
+        MainController mainController = loader.getController();
+        mainController.getGameBoard().setGamemode(btn.getText());
         Scene scene = new Scene(root);
+
         Stage stage = new Stage();
         stage.setTitle("TicTacToe");
         stage.setScene(scene);

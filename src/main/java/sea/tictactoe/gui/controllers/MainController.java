@@ -54,6 +54,10 @@ public class MainController {
         }
         gameBoard.changeGameboard(row, col);
         gameOverUI();
+        if (gameBoard.getGamemode().equals("Single-Player")) {
+            Button aiBtn = gameBtns[gameBoard.getAiField()[0]][gameBoard.getAiField()[1]];
+            aiBtn.setText("O");
+        }
     }
 
     public void gameOverUI() {
@@ -96,5 +100,9 @@ public class MainController {
             btn.getStyleClass().remove("winning-btn");
         }
         gameBoard.resetGame();
+    }
+
+    public GameBoard getGameBoard(){
+        return gameBoard;
     }
 }

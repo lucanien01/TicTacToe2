@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameBoard implements IGameBoard{
 
@@ -15,28 +16,49 @@ public class GameBoard implements IGameBoard{
     private String gamemode;
     private int[][] winningLine;
 
+    private int[] aiField;
+
     // Player Scores
     private int scoreX = 0;
     private int scoreO = 0;
+
+    private void aiMovement(){
+        Random rand = new Random();
+
+        int row = rand.nextInt(gameboard.length);
+        int col = rand.nextInt(gameboard.length);
+
+        // Legal move
+        if (!isFieldOccupied(row, col)){
+            changeGameboard(row, col);
+            setAiField(new int[] {row, col});
+        } else { // Try again
+            aiMovement();
+        }
+    }
 
     public void setGamemode(String chooseMode) {
         this.gamemode = chooseMode;
     }
 
     public void changeGameboard(int row, int col){
+        System.out.println("current player: " + currentPlayer);
         if(gameboard[row][col] == ' ') {
             gameboard[row][col] = currentPlayer;
-            System.out.println("Pressed!");
-            if(!winCheck()){
-                drawCheck();
-            } else {
+
+            if (winCheck()){
                 if(currentPlayer == 'X'){
                     scoreX++;
                 }else if(currentPlayer == 'O'){
                     scoreO++;
                 }
-            }
+            } else if(!drawCheck()) {
             setNextPlayer();
+            if(gamemode.equals("Single-Player") && currentPlayer == 'O'){
+                aiMovement();
+
+                }
+            }
         }
     }
 
@@ -138,4 +160,15 @@ public class GameBoard implements IGameBoard{
         return scoreO;
     }
 
+    private void setAiField(int[] aiField){
+        this.aiField = aiField;
+    }
+
+    public int[] getAiField(){
+        return aiField;
+    }
+
+    public String getGamemode() {
+        return gamemode;
+    }
 }
