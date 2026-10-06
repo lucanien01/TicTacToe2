@@ -5,7 +5,7 @@ import javafx.event.ActionEvent;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class GameBoard {
+public class GameBoard implements IGameBoard{
 
     // Instance variables
     private char currentPlayer = 'X';
@@ -36,7 +36,7 @@ public class GameBoard {
                     scoreO++;
                 }
             }
-            getNextPlayer();
+            setNextPlayer();
         }
     }
 
@@ -44,7 +44,7 @@ public class GameBoard {
         this.winningLine = line;
     }
 
-    public void getNextPlayer(){
+    public void setNextPlayer(){
         if(currentPlayer == 'X'){
             currentPlayer = 'O';
         } else{
