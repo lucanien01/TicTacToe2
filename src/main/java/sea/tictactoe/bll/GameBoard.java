@@ -13,6 +13,11 @@ public class GameBoard {
                                   {' ', ' ', ' '},
                                   {' ', ' ', ' '}};
     private String gamemode;
+    private int[][] winningLine;
+
+    // Player Scores
+    private int scoreX = 0;
+    private int scoreO = 0;
 
     public void setGamemode(String chooseMode) {
         this.gamemode = chooseMode;
@@ -24,9 +29,19 @@ public class GameBoard {
             System.out.println("Pressed!");
             if(!winCheck()){
                 drawCheck();
+            } else {
+                if(currentPlayer == 'X'){
+                    scoreX++;
+                }else if(currentPlayer == 'O'){
+                    scoreO++;
+                }
             }
             getNextPlayer();
         }
+    }
+
+    public void setWinningLine(int[][] line){
+        this.winningLine = line;
     }
 
     public void getNextPlayer(){
@@ -39,44 +54,39 @@ public class GameBoard {
 
     public boolean winCheck(){
 
-        for (int a = 0; a < 8; a++) {
-            String line = null;
-            switch (a){
-                case 0:
-                    line = "" + gameboard[0][0] + gameboard[0][1] + gameboard[0][2];
-                    break;
-                case 1:
-                    line = "" + gameboard[1][0] + gameboard[1][1] + gameboard[1][2];
-                    break;
-                case 2:
-                    line = "" + gameboard[2][0] + gameboard[2][1] + gameboard[2][2];
-                    break;
-                case 3:
-                    line = "" + gameboard[0][0] + gameboard[1][0] + gameboard[2][0];
-                    break;
-                case 4:
-                    line = "" + gameboard[0][1] + gameboard[1][1] + gameboard[2][1];
-                    break;
-                case 5:
-                    line = "" + gameboard[0][2] + gameboard[1][2] + gameboard[2][2];
-                    break;
-                case 6:
-                    line = "" + gameboard[0][0] + gameboard[1][1] + gameboard[2][2];
-                    break;
-                case 7:
-                    line = "" + gameboard[0][2] + gameboard[1][1] + gameboard[2][0];
-                    break;
-            }
-
-            if(line.equals("XXX")) {
-                System.out.println("X Wins");
-            }
-            if(line.equals("OOO")) {
-                System.out.println("O Wins");
-            }
-            if(line.equals("XXX") || line.equals("OOO")){
+        // Horizontal win check
+        for (int i = 0; i < gameboard.length; i++) {
+            if(compareField(gameboard[i][0], gameboard[i][1], gameboard[i][2])){
+                setWinningLine(new int[][]{{i,0},{i,1},{i,2}});
                 return true;
             }
+        }
+
+        // Vertical win check
+        for (int i = 0; i < gameboard.length; i++) {
+            if(compareField(gameboard[0][i], gameboard[1][i], gameboard[2][i])) {
+                setWinningLine(new int[][]{{0,i},{1,i},{2,i}});
+                return true;
+            }
+        }
+
+        // Cross win check
+        if (compareField(gameboard[0][0], gameboard[1][1], gameboard[2][2]))
+        {
+            setWinningLine(new int[][]{{0,0},{1,1},{2,2}});
+            return true;
+        }
+        if (compareField(gameboard[2][0], gameboard[1][1], gameboard[0][2]))
+        {
+            setWinningLine(new int[][]{{2,0},{1,1},{0,2}});
+            return true;
+        }
+        return false;
+    }
+
+    public boolean compareField(char a, char b, char c){
+        if(a != ' ' && a == b && b == c){
+            return true;
         }
         return false;
     }
@@ -97,11 +107,35 @@ public class GameBoard {
         return currentPlayer;
     }
 
+    public int[][] getWinningLine(){
+        return winningLine;
+    }
+
     public boolean isFieldOccupied(int row, int col) {
         if(this.gameboard[row][col] != ' ') {
             return true;
         }
         return false;
+    }
+
+    public void resetGame(){
+        for(int r = 0; r < gameboard.length; r++){
+            for (int c = 0; c < gameboard[r].length; c++){
+                gameboard[r][c] = ' ';
+
+            }
+        }
+        currentPlayer = 'X';
+        setWinningLine(new int[3][2]);
+    }
+
+    // Getters
+    public int getScoreX(){
+        return scoreX;
+    }
+
+    public int getScoreO(){
+        return scoreO;
     }
 
 }
