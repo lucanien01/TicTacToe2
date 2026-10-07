@@ -10,7 +10,7 @@ public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/sea/tictactoe/views/MenuView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Menu");
         stage.setScene(scene);
         stage.show();

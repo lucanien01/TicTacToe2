@@ -31,8 +31,11 @@ public class MainController {
             Integer col = GridPane.getColumnIndex(node);
 
             if(row == null) {row = 0;}
-            if(col == null) {col = 0;}
-            gameBtns[row][col] = (Button) node;
+            if(col == null) {col = 0;
+                gameBtns[row][col] = (Button) node;
+            } else {
+                gameBtns[row][col] = (Button) node;
+            }
         }
     }
 
@@ -51,11 +54,13 @@ public class MainController {
 
         if (!gameBoard.isFieldOccupied(row, col)){
             btn.setText(gameBoard.getCurrentPlayer() + "");
+            btn.getStyleClass().add(gameBoard.getCurrentPlayer() == 'X' ? "game-btn-x" : "game-btn-o");
         }
         gameBoard.changeGameboard(row, col);
         gameOverUI();
         if (gameBoard.getGamemode().equals("Single-Player")) {
             Button aiBtn = gameBtns[gameBoard.getAiField()[0]][gameBoard.getAiField()[1]];
+            aiBtn.getStyleClass().add("game-btn-o");
             aiBtn.setText("O");
         }
     }
@@ -79,7 +84,8 @@ public class MainController {
         for (int[] i: gameBoard.getWinningLine()){
             int row = i[0];
             int col = i[1];
-            gameBtns[row][col].getStyleClass().add("winning-btn");
+
+            gameBtns[row][col].getStyleClass().add(gameBoard.getWinner() == 'X' ? "winning-line-x" : "winning-line-o");
         }
     }
 
@@ -92,12 +98,10 @@ public class MainController {
 
     public void resetGame(){
         for (Node node : grid.getChildren()){
-
             Button btn = (Button) node;
             btn.setDisable(false);
             btn.setText("");
-
-            btn.getStyleClass().remove("winning-btn");
+            btn.getStyleClass().removeIf(element -> element.contains("winning-line-"));
         }
         gameBoard.resetGame();
     }

@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+
+/* STYLING FOR MENU VIEW */
+.menu-container {
+    -fx-background-color: #1A2B33;
+    -fx-font-family: "Outfit";
+}
+
+.title-lbl {
+    -fx-text-fill: #E1E1DF;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.singleplayer-btn, .multiplayer-btn {
+    -fx-padding: 8px 12px;
+    -fx-text-fill: #172B32;
+    -fx-font-size: 16px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+
+.singleplayer-btn {
+    -fx-background-color: #F4B239;
+    -fx-effect: dropshadow(gaussian, rgba(204, 139, 19, 1), 0, 0, 0, 5);
+}
+
+.singleplayer-btn:hover, .multiplayer-btn:hover {
+    -fx-translate-y: 5px;
+    -fx-effect: none;
+}
+
+.multiplayer-btn {
+    -fx-background-color: #30C3BD;
+    -fx-effect: dropshadow(gaussian, rgba(27, 131, 128, 1), 0, 0, 0, 5);
+
+}
+
+/* STYLING FOR GAME VIEW*/
+
+.game-container {
+    -fx-background-color: #1A2B33;
+    -fx-font-family: "Outfit";
+}
+
+.game-container .game-grid {
+    -fx-hgap: 12px;
+    -fx-vgap: 12px;
+}
+
+.game-btn {
+    -fx-background-color: #1F3540;
+    -fx-pref-width: 128px;
+    -fx-pref-height: 128px;
+    -fx-background-radius: 12px;
+    -fx-font-size: 56px;
+    -fx-effect: dropshadow(gaussian, rgba(17, 33, 43, 1), 0, 0, 0, 5);
+    -fx-font-weight: bold;
+    -fx-row-valignment: center;
+    -fx-column-halignment: center;
+    -fx-cursor: hand;
+    -fx-text-fill: #F4B239;
+
+}
+
+.game-btn-x{
+    -fx-text-fill: #F4B239;
+}
+
+.game-btn-o{
+    -fx-text-fill: #30C3BD;
+}
+
+.winning-line-x {
+    -fx-background-color: #F4B239;
+    -fx-text-fill: #1A2B33;
+}
+
+.winning-line-o{
+    -fx-background-color: #30C3BD;
+    -fx-text-fill: #1A2B33;
+}
+
+.newgame-btn{
+    -fx-padding: 8px 12px;
+    -fx-background-color: #A8BFC9;
+    -fx-text-fill: #172B32;
+    -fx-effect: dropshadow(gaussian, rgba(108, 137, 152, 1), 0, 0, 0, 5);
+    -fx-font-size: 16px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+
+.player-x-score, .player-o-score{
+    -fx-text-fill: #A8BFC9;
+    -fx-font-size: 16px;
+}
+
+.newgame-btn:hover{
+    -fx-translate-y: 5;
+    -fx-effect: none;
+}

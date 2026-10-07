@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="439.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sea.tictactoe.gui.controllers.MainController">
+<VBox alignment="CENTER" prefHeight="439.0" prefWidth="600.0" spacing="24.0" styleClass="game-container" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sea.tictactoe.gui.controllers.MainController">
    <children>
-      <GridPane fx:id="grid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="/style.css">
+      <GridPane fx:id="grid" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="404.0" styleClass="game-grid">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -24,63 +24,62 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="226.0" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="128.0" prefWidth="128.0" styleClass="game-btn" />
+            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="128.0" prefWidth="128.0" styleClass="game-btn" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="60.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="226.0" prefWidth="350.0">
+            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="128.0" prefWidth="128.0" styleClass="game-btn" GridPane.rowIndex="1">
                <font>
                   <Font size="60.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="226.0" prefWidth="350.0" GridPane.rowIndex="1">
+            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="128.0" prefWidth="128.0" styleClass="game-btn" GridPane.columnIndex="2">
                <font>
                   <Font size="60.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="226.0" prefWidth="350.0" GridPane.columnIndex="2">
+            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="128.0" prefWidth="128.0" styleClass="game-btn" GridPane.columnIndex="1">
                <font>
                   <Font size="60.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="226.0" prefWidth="350.0" GridPane.columnIndex="1">
+            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="128.0" prefWidth="128.0" styleClass="game-btn" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
                   <Font size="60.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="226.0" prefWidth="350.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="128.0" prefWidth="128.0" styleClass="game-btn" GridPane.rowIndex="2">
                <font>
                   <Font size="60.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="226.0" prefWidth="350.0" GridPane.rowIndex="2">
+            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="128.0" prefWidth="128.0" styleClass="game-btn" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font size="60.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="226.0" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <font>
-                  <Font size="60.0" />
-               </font>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="159.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <Button mnemonicParsing="false" onAction="#onButtonClickSetSymbol" prefHeight="128.0" prefWidth="128.0" styleClass="game-btn" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <font>
                   <Font size="60.0" />
                </font>
             </Button>
          </children>
       </GridPane>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="170.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="72.0">
          <children>
-            <Label fx:id="lblPlayerX" text="X points: 0 " />
-            <Button fx:id="btnNewGame" disable="true" mnemonicParsing="false" onAction="#resetGame" prefHeight="26.0" prefWidth="111.0" text="New Game">
+            <Label fx:id="lblPlayerX" prefHeight="22.0" prefWidth="150.0" styleClass="player-x-score" text="X points: 0" />
+            <Button fx:id="btnNewGame" disable="true" mnemonicParsing="false" onAction="#resetGame" prefHeight="26.0" prefWidth="111.0" styleClass="newgame-btn" text="New Game">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
             </Button>
-            <Label fx:id="lblPlayerO" text="O points:  0 " />
+            <Label fx:id="lblPlayerO" alignment="CENTER_RIGHT" prefHeight="22.0" prefWidth="156.0" styleClass="player-o-score" text="O points:  0" textAlignment="RIGHT" />
          </children>
       </HBox>
    </children>
+   <padding>
+      <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+   </padding>
 </VBox>

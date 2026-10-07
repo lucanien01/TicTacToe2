@@ -6,13 +6,13 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GameBoard implements IGameBoard{
+public class GameBoard implements IGameBoard {
 
     // Instance variables
     private char currentPlayer = 'X';
     private char[][] gameboard = {{' ', ' ', ' '},
-                                  {' ', ' ', ' '},
-                                  {' ', ' ', ' '}};
+            {' ', ' ', ' '},
+            {' ', ' ', ' '}};
     private String gamemode;
     private int[][] winningLine;
 
@@ -22,16 +22,18 @@ public class GameBoard implements IGameBoard{
     private int scoreX = 0;
     private int scoreO = 0;
 
-    private void aiMovement(){
+    private char winner;
+
+    private void aiMovement() {
         Random rand = new Random();
 
         int row = rand.nextInt(gameboard.length);
         int col = rand.nextInt(gameboard.length);
 
         // Legal move
-        if (!isFieldOccupied(row, col)){
+        if (!isFieldOccupied(row, col)) {
             changeGameboard(row, col);
-            setAiField(new int[] {row, col});
+            setAiField(new int[]{row, col});
         } else { // Try again
             aiMovement();
         }
@@ -41,81 +43,79 @@ public class GameBoard implements IGameBoard{
         this.gamemode = chooseMode;
     }
 
-    public void changeGameboard(int row, int col){
+    public void changeGameboard(int row, int col) {
         System.out.println("current player: " + currentPlayer);
-        if(gameboard[row][col] == ' ') {
+        if (gameboard[row][col] == ' ') {
             gameboard[row][col] = currentPlayer;
 
-            if (winCheck()){
-                if(currentPlayer == 'X'){
+            if (winCheck()) {
+                setWinner(currentPlayer);
+                if (winner == 'X') {
                     scoreX++;
-                }else if(currentPlayer == 'O'){
+                } else if (winner == 'O') {
                     scoreO++;
                 }
-            } else if(!drawCheck()) {
-            setNextPlayer();
-            if(gamemode.equals("Single-Player") && currentPlayer == 'O'){
-                aiMovement();
-
+            } else if (!drawCheck()) {
+                setNextPlayer();
+                if (gamemode.equals("Single-Player") && currentPlayer == 'O') {
+                    aiMovement();
                 }
             }
         }
     }
 
-    public void setWinningLine(int[][] line){
+    public void setWinningLine(int[][] line) {
         this.winningLine = line;
     }
 
-    public void setNextPlayer(){
-        if(currentPlayer == 'X'){
+    public void setNextPlayer() {
+        if (currentPlayer == 'X') {
             currentPlayer = 'O';
-        } else{
+        } else {
             currentPlayer = 'X';
         }
     }
 
-    public boolean winCheck(){
+    public boolean winCheck() {
 
         // Horizontal win check
         for (int i = 0; i < gameboard.length; i++) {
-            if(compareField(gameboard[i][0], gameboard[i][1], gameboard[i][2])){
-                setWinningLine(new int[][]{{i,0},{i,1},{i,2}});
+            if (compareField(gameboard[i][0], gameboard[i][1], gameboard[i][2])) {
+                setWinningLine(new int[][]{{i, 0}, {i, 1}, {i, 2}});
                 return true;
             }
         }
 
         // Vertical win check
         for (int i = 0; i < gameboard.length; i++) {
-            if(compareField(gameboard[0][i], gameboard[1][i], gameboard[2][i])) {
-                setWinningLine(new int[][]{{0,i},{1,i},{2,i}});
+            if (compareField(gameboard[0][i], gameboard[1][i], gameboard[2][i])) {
+                setWinningLine(new int[][]{{0, i}, {1, i}, {2, i}});
                 return true;
             }
         }
 
         // Cross win check
-        if (compareField(gameboard[0][0], gameboard[1][1], gameboard[2][2]))
-        {
-            setWinningLine(new int[][]{{0,0},{1,1},{2,2}});
+        if (compareField(gameboard[0][0], gameboard[1][1], gameboard[2][2])) {
+            setWinningLine(new int[][]{{0, 0}, {1, 1}, {2, 2}});
             return true;
         }
-        if (compareField(gameboard[2][0], gameboard[1][1], gameboard[0][2]))
-        {
-            setWinningLine(new int[][]{{2,0},{1,1},{0,2}});
-            return true;
-        }
-        return false;
-    }
-
-    public boolean compareField(char a, char b, char c){
-        if(a != ' ' && a == b && b == c){
+        if (compareField(gameboard[2][0], gameboard[1][1], gameboard[0][2])) {
+            setWinningLine(new int[][]{{2, 0}, {1, 1}, {0, 2}});
             return true;
         }
         return false;
     }
 
-    public boolean drawCheck(){
-        for (int r = 0; r < gameboard.length; r++){
-            for (int c = 0; c <gameboard[r].length; c++){
+    public boolean compareField(char a, char b, char c) {
+        if (a != ' ' && a == b && b == c) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean drawCheck() {
+        for (int r = 0; r < gameboard.length; r++) {
+            for (int c = 0; c < gameboard[r].length; c++) {
                 if (gameboard[r][c] == ' ') {
                     return false;
                 }
@@ -125,24 +125,24 @@ public class GameBoard implements IGameBoard{
         return true;
     }
 
-    public char getCurrentPlayer(){
+    public char getCurrentPlayer() {
         return currentPlayer;
     }
 
-    public int[][] getWinningLine(){
+    public int[][] getWinningLine() {
         return winningLine;
     }
 
     public boolean isFieldOccupied(int row, int col) {
-        if(this.gameboard[row][col] != ' ') {
+        if (this.gameboard[row][col] != ' ') {
             return true;
         }
         return false;
     }
 
-    public void resetGame(){
-        for(int r = 0; r < gameboard.length; r++){
-            for (int c = 0; c < gameboard[r].length; c++){
+    public void resetGame() {
+        for (int r = 0; r < gameboard.length; r++) {
+            for (int c = 0; c < gameboard[r].length; c++) {
                 gameboard[r][c] = ' ';
 
             }
@@ -152,19 +152,27 @@ public class GameBoard implements IGameBoard{
     }
 
     // Getters
-    public int getScoreX(){
+    public int getScoreX() {
         return scoreX;
     }
 
-    public int getScoreO(){
+    public int getScoreO() {
         return scoreO;
     }
 
-    private void setAiField(int[] aiField){
+    public char getWinner() {
+        return winner;
+    }
+
+    private void setWinner(char winner) {
+        this.winner = winner;
+    }
+
+    private void setAiField(int[] aiField) {
         this.aiField = aiField;
     }
 
-    public int[] getAiField(){
+    public int[] getAiField() {
         return aiField;
     }
 
