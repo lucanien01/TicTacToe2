@@ -51,22 +51,24 @@ public class MainController {
 
         // check if the button is not already clicked
         if (!gameBoard.isFieldOccupied(btnCoords[0], btnCoords[1])){
-            setBtnvisuals((Button) buttonClicked, gameBoard.getCurrentPlayer());
+            setBtnVisuals((Button) buttonClicked, gameBoard.getCurrentPlayer());
             gameBoard.changeGameboard(btnCoords[0], btnCoords[1]);
             checkForWinOrDraw();
         }
 
         if (gameBoard.getGamemode().equals("Single-Player")) {
             Button aiBtn = gameBtns[gameBoard.getAiField()[0]][gameBoard.getAiField()[1]];
-            setBtnvisuals(aiBtn, 'O');
+            setBtnVisuals(aiBtn, 'O');
         }
     }
 
-    private void setBtnvisuals(Button btn, char symbol){
+    // Takes in button and char as parameters and set visual
+    private void setBtnVisuals(Button btn, char symbol){
         btn.setText(symbol + "");
         btn.getStyleClass().add(symbol == 'X' ? "game-btn-x" : "game-btn-o");
     }
 
+    // Returns buttons row and col
     private int[] getRowAndCol(Button btn){
         for (int row = 0; row < gameBtns.length; row ++){
             for (int col = 0; col < gameBtns[row].length; col++){

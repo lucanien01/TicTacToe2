@@ -63,7 +63,6 @@
     -fx-column-halignment: center;
     -fx-cursor: hand;
     -fx-text-fill: #F4B239;
-
 }
 
 .game-btn-x{
@@ -94,8 +93,13 @@
     -fx-cursor: hand;
 }
 
-.player-x-score, .player-o-score{
-    -fx-text-fill: #A8BFC9;
+.player-o-score{
+    -fx-text-fill: #30C3BD;
+    -fx-font-size: 16px;
+}
+
+.player-x-score{
+    -fx-text-fill: #F4B239;
     -fx-font-size: 16px;
 }
 
