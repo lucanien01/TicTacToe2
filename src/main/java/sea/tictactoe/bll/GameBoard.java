@@ -1,9 +1,5 @@
 package sea.tictactoe.bll;
 
-import javafx.event.ActionEvent;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class GameBoard implements IGameBoard {
@@ -11,19 +7,18 @@ public class GameBoard implements IGameBoard {
     // Instance variables
     private char currentPlayer = 'X';
     private char[][] gameboard = {{' ', ' ', ' '},
-            {' ', ' ', ' '},
-            {' ', ' ', ' '}};
+                                  {' ', ' ', ' '},
+                                  {' ', ' ', ' '}};
     private String gamemode;
     private int[][] winningLine;
-
     private int[] aiField;
 
     // Player Scores
     private int scoreX = 0;
     private int scoreO = 0;
-
     private char winner;
 
+    // Handles AI controls
     private void aiMovement() {
         Random rand = new Random();
 
@@ -39,22 +34,13 @@ public class GameBoard implements IGameBoard {
         }
     }
 
-    public void setGamemode(String chooseMode) {
-        this.gamemode = chooseMode;
-    }
-
+    // Displays the visual representation of symbols on the grid panes buttons
     public void changeGameboard(int row, int col) {
-        System.out.println("current player: " + currentPlayer);
         if (gameboard[row][col] == ' ') {
             gameboard[row][col] = currentPlayer;
 
             if (winCheck()) {
                 setWinner(currentPlayer);
-                if (winner == 'X') {
-                    scoreX++;
-                } else if (winner == 'O') {
-                    scoreO++;
-                }
             } else if (!drawCheck()) {
                 setNextPlayer();
                 if (gamemode.equals("Single-Player") && currentPlayer == 'O') {
@@ -64,18 +50,7 @@ public class GameBoard implements IGameBoard {
         }
     }
 
-    public void setWinningLine(int[][] line) {
-        this.winningLine = line;
-    }
-
-    public void setNextPlayer() {
-        if (currentPlayer == 'X') {
-            currentPlayer = 'O';
-        } else {
-            currentPlayer = 'X';
-        }
-    }
-
+    // Handles the logic behind which player wins the game
     public boolean winCheck() {
 
         // Horizontal win check
@@ -85,7 +60,6 @@ public class GameBoard implements IGameBoard {
                 return true;
             }
         }
-
         // Vertical win check
         for (int i = 0; i < gameboard.length; i++) {
             if (compareField(gameboard[0][i], gameboard[1][i], gameboard[2][i])) {
@@ -93,7 +67,6 @@ public class GameBoard implements IGameBoard {
                 return true;
             }
         }
-
         // Cross win check
         if (compareField(gameboard[0][0], gameboard[1][1], gameboard[2][2])) {
             setWinningLine(new int[][]{{0, 0}, {1, 1}, {2, 2}});
@@ -106,13 +79,15 @@ public class GameBoard implements IGameBoard {
         return false;
     }
 
-    public boolean compareField(char a, char b, char c) {
+    // Helper method for wincheck
+    private boolean compareField(char a, char b, char c) {
         if (a != ' ' && a == b && b == c) {
             return true;
         }
         return false;
     }
 
+    // Checks if there is no winner and draws the game
     public boolean drawCheck() {
         for (int r = 0; r < gameboard.length; r++) {
             for (int c = 0; c < gameboard[r].length; c++) {
@@ -121,18 +96,10 @@ public class GameBoard implements IGameBoard {
                 }
             }
         }
-        System.out.println("Draw");
         return true;
     }
 
-    public char getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public int[][] getWinningLine() {
-        return winningLine;
-    }
-
+    // Checks if the current field is occupied, so you cant push a button that's allready pushed
     public boolean isFieldOccupied(int row, int col) {
         if (this.gameboard[row][col] != ' ') {
             return true;
@@ -140,6 +107,7 @@ public class GameBoard implements IGameBoard {
         return false;
     }
 
+    // Resets game
     public void resetGame() {
         for (int r = 0; r < gameboard.length; r++) {
             for (int c = 0; c < gameboard[r].length; c++) {
@@ -155,28 +123,48 @@ public class GameBoard implements IGameBoard {
     public int getScoreX() {
         return scoreX;
     }
-
     public int getScoreO() {
         return scoreO;
     }
-
     public char getWinner() {
         return winner;
     }
-
-    private void setWinner(char winner) {
-        this.winner = winner;
-    }
-
-    private void setAiField(int[] aiField) {
-        this.aiField = aiField;
-    }
-
     public int[] getAiField() {
         return aiField;
     }
-
     public String getGamemode() {
         return gamemode;
+    }
+    public char getCurrentPlayer() {
+        return currentPlayer;
+    }
+    public int[][] getWinningLine() {
+        return winningLine;
+    }
+
+    // Setters
+    public void setWinner(char winner) {
+        this.winner = winner;
+        if (this.winner == 'X') {
+            scoreX++;
+        } else if (this.winner == 'O') {
+            scoreO++;
+        }
+    }
+    public void setGamemode(String chooseMode) {
+        this.gamemode = chooseMode;
+    }
+    public void setAiField(int[] aiField) {
+        this.aiField = aiField;
+    }
+    public void setWinningLine(int[][] line) {
+        this.winningLine = line;
+    }
+    public void setNextPlayer() {
+        if (currentPlayer == 'X') {
+            currentPlayer = 'O';
+        } else {
+            currentPlayer = 'X';
+        }
     }
 }

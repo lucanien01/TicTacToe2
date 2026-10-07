@@ -11,10 +11,13 @@ import javafx.scene.control.Label;
 import java.awt.*;
 
 public class MainController {
-    @FXML
-    private GridPane grid;
+
+    // Instance variables
     private GameBoard gameBoard = new GameBoard();
     private Button[][] gameBtns = new Button[3][3];
+
+    @FXML
+    private GridPane grid;
 
     @FXML
     private Button btnNewGame;
@@ -25,6 +28,7 @@ public class MainController {
     @FXML
     private Label lblPlayerO;
 
+    // Initializer
     public void initialize(){
         for (Node node : grid.getChildren()){
             Integer row = GridPane.getRowIndex(node);
@@ -39,33 +43,43 @@ public class MainController {
         }
     }
 
+    // Gets indexes from grid & sets appropiate symbols on btns
     @FXML
     public void onButtonClickSetSymbol(ActionEvent actionEvent){
-
         Node buttonClicked = (Node) actionEvent.getSource();
+        int[] btnCoords = getRowAndCol((Button) buttonClicked);
 
-        Integer row = GridPane.getRowIndex(buttonClicked);
-        Integer col = GridPane.getColumnIndex(buttonClicked);
-
-        if(row == null) {row = 0;}
-        if(col == null) {col = 0;}
-
-        Button btn = (Button) buttonClicked;
-
-        if (!gameBoard.isFieldOccupied(row, col)){
-            btn.setText(gameBoard.getCurrentPlayer() + "");
-            btn.getStyleClass().add(gameBoard.getCurrentPlayer() == 'X' ? "game-btn-x" : "game-btn-o");
+        // check if the button is not already clicked
+        if (!gameBoard.isFieldOccupied(btnCoords[0], btnCoords[1])){
+            setBtnvisuals((Button) buttonClicked, gameBoard.getCurrentPlayer());
+            gameBoard.changeGameboard(btnCoords[0], btnCoords[1]);
+            checkForWinOrDraw();
         }
-        gameBoard.changeGameboard(row, col);
-        gameOverUI();
+
         if (gameBoard.getGamemode().equals("Single-Player")) {
             Button aiBtn = gameBtns[gameBoard.getAiField()[0]][gameBoard.getAiField()[1]];
-            aiBtn.getStyleClass().add("game-btn-o");
-            aiBtn.setText("O");
+            setBtnvisuals(aiBtn, 'O');
         }
     }
 
-    public void gameOverUI() {
+    private void setBtnvisuals(Button btn, char symbol){
+        btn.setText(symbol + "");
+        btn.getStyleClass().add(symbol == 'X' ? "game-btn-x" : "game-btn-o");
+    }
+
+    private int[] getRowAndCol(Button btn){
+        for (int row = 0; row < gameBtns.length; row ++){
+            for (int col = 0; col < gameBtns[row].length; col++){
+                if (gameBtns[row][col] == btn){
+                    return new int[]{row, col};
+                }
+            }
+        }
+        return new int [2];
+    }
+
+    // Handles all ui displayed as the game stops.
+    public void checkForWinOrDraw() {
         if(gameBoard.winCheck()){
             highlightWinningLine();
             disableButtons();
@@ -80,6 +94,7 @@ public class MainController {
         }
     }
 
+    // Highlights the 3 buttons that is the winning line
     public void highlightWinningLine(){
         for (int[] i: gameBoard.getWinningLine()){
             int row = i[0];
@@ -89,6 +104,7 @@ public class MainController {
         }
     }
 
+    // Disables all game-buttons as the game sotps
     public void disableButtons(){
         for (Node node : grid.getChildren()) {
             Button btn = (Button) node;
@@ -96,12 +112,14 @@ public class MainController {
         }
     }
 
+    // Resets game and handles .css
     public void resetGame(){
         for (Node node : grid.getChildren()){
             Button btn = (Button) node;
             btn.setDisable(false);
             btn.setText("");
             btn.getStyleClass().removeIf(element -> element.contains("winning-line-"));
+            btn.getStyleClass().removeIf(element -> element.contains("game-btn-"));
         }
         gameBoard.resetGame();
     }

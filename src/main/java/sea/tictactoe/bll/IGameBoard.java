@@ -5,14 +5,11 @@ public interface IGameBoard {
 
     void setGamemode(String chooseMode);
 
-
     void setWinningLine(int[][] line);
 
     void setNextPlayer();
 
     boolean winCheck();
-
-    boolean compareField(char a, char b, char c);
 
     boolean drawCheck();
 
