@@ -76,7 +76,7 @@ public class GameController {
     }
 
     // Handles all ui displayed as the game stops.
-    public void checkForWinOrDraw() {
+    private void checkForWinOrDraw() {
         if(gameBoard.winCheck()){
             highlightWinningLine();
             disableButtons();
@@ -92,7 +92,7 @@ public class GameController {
     }
 
     // Highlights the 3 buttons that is the winning line
-    public void highlightWinningLine(){
+    private void highlightWinningLine(){
         for (int[] i: gameBoard.getWinningLine()){
             int row = i[0];
             int col = i[1];
@@ -102,7 +102,7 @@ public class GameController {
     }
 
     // Disables all game-buttons as the game sotps
-    public void disableButtons(){
+    private void disableButtons(){
         for (Node node : grid.getChildren()) {
             Button btn = (Button) node;
             btn.setDisable(true);
