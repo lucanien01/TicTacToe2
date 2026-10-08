@@ -33,11 +33,8 @@ public class GameController {
             Integer col = GridPane.getColumnIndex(node);
 
             if(row == null) {row = 0;}
-            if(col == null) {col = 0;
-                gameBtns[row][col] = (Button) node;
-            } else {
-                gameBtns[row][col] = (Button) node;
-            }
+            if(col == null) {col = 0;}
+            gameBtns[row][col] = (Button) node;
         }
     }
 

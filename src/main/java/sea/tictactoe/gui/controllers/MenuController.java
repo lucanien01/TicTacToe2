@@ -8,13 +8,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
 public class MenuController {
 
     public void initialize(){
-        FadeTransition fadeOut = new FadeTransition();
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(2));
+
     }
 
     public void openGameboard(ActionEvent event) throws IOException {
@@ -27,6 +29,7 @@ public class MenuController {
         Scene scene = new Scene(root);
 
         Stage stage = new Stage();
+        stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("TicTacToe");
         stage.setScene(scene);
