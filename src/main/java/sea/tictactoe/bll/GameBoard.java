@@ -7,8 +7,8 @@ public class GameBoard implements IGameBoard {
     // Instance variables
     private char currentPlayer = 'X';
     private char[][] gameboard = {{' ', ' ', ' '},
-                                  {' ', ' ', ' '},
-                                  {' ', ' ', ' '}};
+            {' ', ' ', ' '},
+            {' ', ' ', ' '}};
     private String gamemode;
     private int[][] winningLine;
     private int[] aiField;
@@ -34,9 +34,8 @@ public class GameBoard implements IGameBoard {
         }
     }
 
-    // Displays the visual representation of symbols on the grid panes buttons
     public void changeGameboard(int row, int col) {
-        if (gameboard[row][col] == ' ') {
+        if (!isFieldOccupied(row, col)) {
             gameboard[row][col] = currentPlayer;
 
             if (winCheck()) {
@@ -50,7 +49,7 @@ public class GameBoard implements IGameBoard {
         }
     }
 
-    // Handles the logic behind which player wins the game
+    // Checks if there is a win
     public boolean winCheck() {
 
         // Horizontal win check
@@ -87,19 +86,21 @@ public class GameBoard implements IGameBoard {
         return false;
     }
 
-    // Checks if there is no winner and draws the game
+    // Checks if the board is full
     public boolean drawCheck() {
-        for (int r = 0; r < gameboard.length; r++) {
-            for (int c = 0; c < gameboard[r].length; c++) {
-                if (gameboard[r][c] == ' ') {
-                    return false;
+        if (!winCheck()) {
+            for (char[] chars : gameboard) {
+                for (char aChar : chars) {
+                    if (aChar == ' ') {
+                        return false;
+                    }
                 }
             }
         }
         return true;
     }
 
-    // Checks if the current field is occupied, so you cant push a button that's allready pushed
+    // Checks if the current field is occupied given a row and col
     public boolean isFieldOccupied(int row, int col) {
         if (this.gameboard[row][col] != ' ') {
             return true;
@@ -123,21 +124,27 @@ public class GameBoard implements IGameBoard {
     public int getScoreX() {
         return scoreX;
     }
+
     public int getScoreO() {
         return scoreO;
     }
+
     public char getWinner() {
         return winner;
     }
+
     public int[] getAiField() {
         return aiField;
     }
+
     public String getGamemode() {
         return gamemode;
     }
+
     public char getCurrentPlayer() {
         return currentPlayer;
     }
+
     public int[][] getWinningLine() {
         return winningLine;
     }
@@ -151,15 +158,19 @@ public class GameBoard implements IGameBoard {
             scoreO++;
         }
     }
+
     public void setGamemode(String chooseMode) {
         this.gamemode = chooseMode;
     }
+
     public void setAiField(int[] aiField) {
         this.aiField = aiField;
     }
+
     public void setWinningLine(int[][] line) {
         this.winningLine = line;
     }
+
     public void setNextPlayer() {
         if (currentPlayer == 'X') {
             currentPlayer = 'O';

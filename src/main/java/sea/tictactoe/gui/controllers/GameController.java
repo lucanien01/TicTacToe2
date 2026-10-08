@@ -8,9 +8,7 @@ import javafx.scene.layout.GridPane;
 import sea.tictactoe.bll.GameBoard;
 import javafx.scene.control.Label;
 
-import java.awt.*;
-
-public class MainController {
+public class GameController {
 
     // Instance variables
     private GameBoard gameBoard = new GameBoard();
